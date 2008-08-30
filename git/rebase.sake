@@ -4,7 +4,6 @@ namespace :git do
     `git diff-files --quiet`
     if $?.exitstatus == 1
       stash = true
-      clear = `git stash list`.scan("\n").size == 0
       puts "* Saving changes..."
       `git stash save`
     else
@@ -32,8 +31,7 @@ namespace :git do
 
     if stash
       puts "* Applying changes..."
-      sh "git stash apply"
-      `git stash clear` if clear
+      sh "git stash pop"
     end
   end
 end
